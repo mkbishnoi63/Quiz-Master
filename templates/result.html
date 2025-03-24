@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Search Results</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        h2 {
+            margin-top: 40px;
+            color: #333;
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="/admin_dash">Home</a> | 
+            <a href="/quiz">Quiz</a> | 
+            <a href="/adm_summary">Summary</a> | 
+            <a href="/logout">Logout</a>
+        </div>
+        <div class="right-section">
+            <form action="/search" method="GET" style="display: flex;">
+                <input type="text" name="query" placeholder="Search by subject, chapter, or quiz" value="{{ search_query }}">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+            <strong>Welcome {{ username }}</strong>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Subjects Found -->
+        {% if subjects|length > 0 %}
+            <h2>Subjects Found</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject ID</th>
+                        <th>Subject Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for subject in subjects %}
+                        <tr>
+                            <td>{{ subject.id }}</td>
+                            <td>{{ subject.name }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% elif search_query != 'user' %}
+            <p><strong>No subjects found.</strong></p>
+        {% endif %}
+
+        <!-- Chapters Found -->
+        {% if chapters|length > 0 %}
+            <h2>Chapters Found</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Chapter ID</th>
+                        <th>Chapter Name</th>
+                        <th>Description</th>
+                        <th>Subject ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for chapter in chapters %}
+                        <tr>
+                            <td>{{ chapter.id }}</td>
+                            <td>{{ chapter.name }}</td>
+                            <td>{{ chapter.description }}</td>
+                            <td>{{ chapter.subject_id }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% elif search_query != 'user' %}
+            <p><strong>No chapters found.</strong></p>
+        {% endif %}
+
+        <!-- Quizzes Found -->
+        {% if quizzes|length > 0 %}
+            <h2>Quizzes Found</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Quiz ID</th>
+                        <th>Chapter Name</th>
+                        <th>Time Duration (minutes)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for quiz in quizzes %}
+                        <tr>
+                            <td>{{ quiz.id }}</td>
+                            <td>{{ quiz.chapter.name }}</td>
+                            <td>{{ quiz.time_duration }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% elif search_query != 'user' %}    
+            <p><strong>No quizzes found.</strong></p>
+        {% endif %}
+
+         <!-- Users Found -->
+        {% if users|length > 0 %}
+        <h2>Users Found</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>Email</th>
+                    <th>Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                    {% if u.type == 'user' %}
+                    <tr>
+                        <td>{{ u.username }}</td>
+                        <td>{{ u.fullname }}</td>
+                        <td>{{ u.gender }}</td>
+                        <td>{{ u.email }}</td>
+                        <td>{{ u.type }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        {% elif search_query=='user' %}
+        <p><strong>No users found.</strong></p>
+        {% endif %}
+
+    </div>
+</body>
+</html>
