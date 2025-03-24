@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Summary chart</title>
+    <link rel="stylesheet" href="static/style.css">
+    <style>
+        img { width: 50%; margin-bottom: 40px; border-radius: 10px; box-shadow: 0px 4px 12px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="/admin_dash">Home</a> | 
+            <a href="/quiz">Quiz</a> | 
+            <a href="/adm_summary">Summary</a> | 
+            <a href="/logout">Logout</a>
+        </div>
+
+        <div class="right-section">
+            <div>
+                <form action="/search" method="GET" style="display: flex;">
+                    <input type="text" name="query" placeholder="Search by subject, chapter, or quiz" />
+                    <button type="submit" class="search-button">Search</button>
+                </form>                
+            </div>
+            <strong>Welcome {{ username }}</strong>
+        </div>
+    </div>
+
+    {% if message %}
+        <div class="message">{{ message }}</div>
+    {% else %}
+        <h2>Subject-wise Top Scores</h2>
+        <img src="{{ bar_chart }}" alt="Top Scores Chart">
+        <h2>Subject-wise Quiz Attempts</h2>
+        <img src="{{ pie_chart }}" alt="Quiz Attempts Chart">
+    {% endif %}
+</body>
+</html>
