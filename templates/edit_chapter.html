@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit chapter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="card shadow-lg" style="width: 500px;">
+            <div class="card-body">
+                <h4 class="text-center">Edit chapter</h4>
+                <br>
+                <form action="/edit/chapter/{{chapter.id}}" method="POST">
+                    <div class="mb-3">
+                        <label for="Input1" class="form-label">Name:</label>
+                        <input type="text" class="form-control" value='{{chapter.name}}' id="Input1" name="chap_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Input2" class="form-label">Description:</label>
+                        <textarea class="form-control" id="Input2" name="desc" rows="4" required>{{chapter.description}}</textarea>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Edit chapter</button>
+                    </div>
+                </form>
+                <br>
+                <p>don't want to edit chapter? <a href="/admin_dash">Go Back</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
