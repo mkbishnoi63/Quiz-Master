@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Quiz Management</title>
+    <link rel="stylesheet" href="static/style.css">
+    <style>
+        table {
+            width: 100%;
+            border-color: black;
+            border-style: solid;
+            border-collapse: collapse;
+        }
+        th, td {border-style: solid;
+            border-color: black;
+            border-collapse: collapse;
+            padding: 10px;
+            text-align: center;
+        }
+        .quiz-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .quiz-box {
+            width: 45%;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            max-height: 210px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="/admin_dash">Home</a> | 
+            <a href="/quiz">Quiz</a> | 
+            <a href="/adm_summary">Summary</a> | 
+            <a href="/logout">Logout</a>
+        </div>
+
+        <div class="right-section">
+            <div>
+                <form action="/search" method="GET" style="display: flex;">
+                    <input type="text" name="query" placeholder="Search by subject, chapter, or quiz" />
+                    <button type="submit" class="search-button">Search</button>
+                </form>                
+            </div>
+            <strong>Welcome {{ username }}</strong>
+        </div>
+    </div>
+    </div>
+    {% if quizzes|length != 0 %}
+    <div class="quiz-container">
+        {% for quiz in quizzes %}
+        <div class="quiz-box">
+            <h2 style="text-align: center;">Quiz {{ quiz.id }}({{quiz.chapter.name}})</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Question title</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for question in questions %}
+                        {% if question.quiz_id == quiz.id %}
+                        <tr>
+                            <td>{{ question.id }}</td>
+                            <td>{{ question.question_text }}</td>
+                            <td><a href="/edit/question/{{ question.id }}">Edit</a> | <a href="/delete/question/{{ question.id }}">Delete</a></td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/add/question/{{ quiz.id }}">+ Add Question</a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>Quizzes not found</p>
+    {% endif %}
+    <div style="display: flex; justify-content: center; margin-top: 20px;">
+        <a href="/add/quiz" style="padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; font-size: 18px;">+ New Quiz</a>
+    </div>
+</body>
+</html>
