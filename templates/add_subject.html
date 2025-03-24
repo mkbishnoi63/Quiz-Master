@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Subject</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="card shadow-lg" style="width: 500px;">
+            <div class="card-body">
+                <h4 class="text-center">New Subject</h4>
+                <br>
+                <form action="/add/subject" method="POST">
+                    <div class="mb-3">
+                        <label for="Input1" class="form-label">Name:</label>
+                        <input type="text" class="form-control" id="Input1" name="sub_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Input2" class="form-label">Description:</label>
+                        <textarea class="form-control" id="Input2" name="desc" rows="4" required></textarea>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Add Subject</button>
+                    </div>
+                </form>
+                <br>
+                <p>don't want to add subject? <a href="/admin_dash">Go Back</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
