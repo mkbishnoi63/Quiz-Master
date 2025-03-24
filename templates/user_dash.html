@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="static/style.css"> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="/user_dash">Home</a> | 
+            <a href="/score">Scores</a> | 
+            <a href="/summary">Summary</a> | 
+            <a href="/logout">Logout</a>
+        </div>
+
+        <div class="right-section">
+            <form action="/user_search" method="GET" style="display: flex;">
+                <input type="text" name="query" placeholder="chapter, quiz or score" value="{{ search_query }}">
+                <input type="hidden" name="username" value="{{ username }}">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+            <strong>Welcome {{ username }}</strong>
+        </div>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5>Upcoming Quizzes</h5>
+                </div>
+                <div class="card-body">
+                    <div class = "table-container">
+                        <table class="table table-bordered table-lg">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Chapter</th>
+                                <th>Date</th>
+                                <th>Duration(hh:mm)</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for quiz in data %}
+                            <tr>
+                                <td>{{ quiz.id }}</td>
+                                <td>{{ quiz.chapter.name }}</td>
+                                <td>{{ quiz.date_of_quiz }}</td>
+                                <td>{{ quiz.time_duration }}</td>
+                                <td><a href="/quiz/view/{{ quiz.id }}" class="btn btn-primary btn-sm">View</a>
+                                    <a href="/quiz/start/{{ quiz.id }}" class="btn btn-primary btn-sm">Start</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>      
+</html>
