@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin dashboard</title>
+    <link rel="stylesheet" href="static/style.css">
+    <style>
+        table {
+            width: 100%;
+            border-color: black;
+            border-style: solid;
+            border-collapse: collapse;
+        }
+        th, td {border-style: solid;
+            border-color: black;
+            border-collapse: collapse;
+            padding: 10px;
+            text-align: center;
+        }
+        .subject-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .subject-box {
+            width: 45%;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="/admin_dash">Home</a> | 
+            <a href="/quiz">Quiz</a> | 
+            <a href="/adm_summary">Summary</a> | 
+            <a href="/logout">Logout</a>
+        </div>
+
+        <div class="right-section">
+            <div>
+                <form action="/search" method="GET" style="display: flex;">
+                    <input type="text" name="query" placeholder="Search by subject, chapter, or quiz" />
+                    <button type="submit" class="search-button">Search</button>
+                </form>  
+            </div>
+            <strong>Welcome {{ username }}</strong>
+        </div>
+    </div>
+    
+    {% if subjects|length != 0 %}
+    <div class="subject-container">
+        {% for subject in subjects %}
+            <div class="subject-box">
+                <h2 style="text-align: center;">{{ subject.name }}</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Chapter Name</th>
+                            <th>Chapter Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for chapter in chapters %}
+                            {% if chapter.subject_id == subject.id %}
+                            <tr>
+                                <td>{{ chapter.name }}</td>
+                                <td>{{ chapter.description }}</td>
+                                <td><a href="/edit/chapter/{{ chapter.id }}">Edit</a> | <a href="/delete/chapter/{{ chapter.id }}">Delete</a></td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <a href="/add/chapter/{{ subject.id }}">+ Add Chapter</a>
+            </div>
+        {% endfor %}    
+    </div>
+    {% else %}
+        <p>subjects not found</p>
+    {% endif %}
+    <div style="display: flex; justify-content: center; margin-top: 20px;">
+        <a href="/add/subject" style="padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; font-size: 18px;">+ Subject</a>
+    </div>
+</body>
+</html>
