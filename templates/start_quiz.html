@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Quiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .quiz-container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        .question-block {
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            background: #f1f1f1;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .question-block p {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        label {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+        input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+        .btn-custom {
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+        }
+        .btn-success:hover {
+            background-color: #1e7e34;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+    </style>
+</head>
+<body data-quiz-id="{{ quiz.id }}" data-timeduration="{{ timeduration }}">
+
+    <div class="quiz-container">
+        <h1 class="text-center mb-4">Quiz {{ quiz.id }}</h1>
+        <h4>Time Remaining: {{ minutes_left }}m {{ seconds_left }}s</h4>
+        <br>
+        <form method="POST">
+            <div class="question-block">
+                <p>Q{{ current_question_index + 1 }}: {{ current_question.question_text }}</p>
+                <input type="hidden" name="question_id" value="{{ current_question.id }}">
+
+                <label>
+                    <input type="radio" name="selected_option" value="1"
+                        {% if saved_responses.get(current_question.id)|string == '1' %} checked {% endif %}>
+                    {{ current_question.option_1 }}
+                </label>
+                <label>
+                    <input type="radio" name="selected_option" value="2"
+                        {% if saved_responses.get(current_question.id)|string == '2' %} checked {% endif %}>
+                    {{ current_question.option_2 }}
+                </label>
+                <label>
+                    <input type="radio" name="selected_option" value="3"
+                        {% if saved_responses.get(current_question.id)|string == '3' %} checked {% endif %}>
+                    {{ current_question.option_3 }}
+                </label>
+                <label>
+                    <input type="radio" name="selected_option" value="4"
+                        {% if saved_responses.get(current_question.id)|string == '4' %} checked {% endif %}>
+                    {{ current_question.option_4 }}
+                </label>
+
+                <div class="d-flex justify-content-between mt-4">
+                    {% if current_question_index > 0 %}
+                        <button type="submit" name="previous" class="btn btn-secondary btn-custom w-45">Previous</button>
+                    {% endif %}
+                    <button type="submit" name="save_next" class="btn btn-primary btn-custom w-45">Save & Next</button>
+                </div>
+
+                {% if current_question_index == questions|length - 1 %}
+                    <button type="submit" name="submit_quiz" class="btn btn-success btn-custom w-100 mt-3">Submit Quiz</button>
+                {% endif %}   
+            </div>
+        </form>   
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div class="text-center mt-4">
+        <a href="#" onclick="confirmExit()" class="btn btn-danger btn-custom w-50">Exit Quiz</a>
+    </div>
+    <script>
+    function confirmExit() {
+        if (confirm("Are you sure you want to exit? Your progress will be deleted.")) {
+            // Clear local timer for this quiz
+            var quizId = document.body.getAttribute('data-quiz-id');
+            localStorage.removeItem("quiz_end_time_" + quizId);
+            window.location.href = "{{ url_for('exit_quiz', quiz_id=quiz.id) }}";
+        }
+    }
+    </script>    
+    
+</body>
+</html>
+
+
