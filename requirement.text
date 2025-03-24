@@ -1,0 +1,7 @@
+Need to install framworks in terminal--
+
+flask, jinja2
+flask_restful, matplotlib
+flask_sqlalchemy, datatime
+
+you need to use any extension like sqlite3Editoror any other for open database 
