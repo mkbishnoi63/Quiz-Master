@@ -1,0 +1,122 @@
+openapi: 3.0.0
+info:
+  title: Quiz Master Admin API
+  version: 1.0.0
+  description: API documentation for Subject, Quiz, and User management endpoints.
+
+paths:
+  /subject/{subject_id}:
+    delete:
+      summary: Delete a subject and all its related data
+      parameters:
+        - in: path
+          name: subject_id
+          schema:
+            type: integer
+          required: true
+          description: ID of the subject to delete
+      responses:
+        '200':
+          description: Subject and related data deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Subject not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /quiz/{quiz_id}:
+    put:
+      summary: Update quiz details
+      parameters:
+        - in: path
+          name: quiz_id
+          schema:
+            type: integer
+          required: true
+          description: ID of the quiz to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date_of_quiz:
+                  type: string
+                  example: "2025-03-30 15:00"
+                  description: Quiz date in format YYYY-MM-DD HH:MM
+                time_duration:
+                  type: integer
+                  example: 30
+                remarks:
+                  type: string
+                  example: "Updated remarks"
+      responses:
+        '200':
+          description: Quiz updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Invalid input data or date format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Quiz not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /delete_user/{username}:
+    delete:
+      summary: Delete a user and their related data
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Username of the user to delete
+      responses:
+        '200':
+          description: User and related data deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
