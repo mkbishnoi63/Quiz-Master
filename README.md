@@ -1,7 +1,16 @@
-MAD 1 PROJECT
 
-  QUIZ MASTER V1
+QUIZ MASTER V1
 
+Features ---
+ 1. Admin ---
+    admin can add, delete and edit subjects, chaptes for each subject.
+    admin can add, delete and edit quizzes, questions for each quiz.
+    Also he can see users and summary of attempted quizzes by users.
+ 3. User ---
+    uses can register/login.
+    user can attempt quiz.
+    user can see his perfomance in quiz.
+    user can see his summary for subject wise attemped quizzes in the format of plot.
 
 HOW TO RUN THE CODE ----
 
