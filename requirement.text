@@ -4,4 +4,4 @@ flask, jinja2
 flask_restful, matplotlib
 flask_sqlalchemy, datatime
 
-you need to use any extension like sqlite3Editoror any other for open database 
+you need to use any extension like sqlite3Editor for open database 
