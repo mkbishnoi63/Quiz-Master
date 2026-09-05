@@ -16,7 +16,7 @@ HOW TO RUN THE CODE ----
 
 1. Clone the repository 
 
-    https://github.com/manish-24f2004796/MAD1-jan-2025.git
+    https://github.com/manish-24f2004796/Quiz-Master.git
 
 2. First install all framworks which is given in requirement.text usint "pip install -r requirement.text"
     ensure that you shoulld have installed python 3.0 and above version in you system.
